@@ -50,7 +50,6 @@ class VkParser:
             date = item['date']
             likes = item['likes']['count']
             if any(x.startswith(str(likes) + '.jpg') for x in name_list):
-            # if str(likes) + '.jpg' in name_list:
                 file_name = str(likes) + '-' + str(date)
             else:
                 file_name = str(likes)
@@ -90,9 +89,7 @@ if __name__ == '__main__':
     user = VkParser(VK_TOKEN)
     uploader = YaUploader(YANDEX_TOKEN)
     uploader.create_folder(folder_path)
-    name_list = user.get_photos(10)
-    # for element in user.get_photos():
-    #     uploader.upload(element.split('|')[1], folder_path + element.split('|')[0])
+    name_list = user.get_photos()
     for element in trange(len(name_list), desc=f"Загрузка файлов на Яндекс Диск: "):
         uploader.upload(name_list[element].split('|')[1], folder_path + name_list[element].split('|')[0])
     print('Фото успешно загружены на Яндекс Диск\nСписок загруженных файлов доступен в файле info.json')
